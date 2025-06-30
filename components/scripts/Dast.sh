@@ -3,20 +3,20 @@ source ./dot.env
 set -e
 
 # 기본값 설정
-CONTAINER_NAME="${CONTAINER_NAME:-webgoat}"
+CONTAINER_NAME="${CONTAINER_NAME:-dvwa}"
 BUILD_NUMBER="${BUILD_NUMBER:-1}"
 REGION="${REGION:-ap-northeast-2}"
 ECR_REPO="${ECR_REPO}"
-ZAP_SCRIPT="${ZAP_SCRIPT:-zap_webgoat.sh}"
-S3_BUCKET="${S3_BUCKET:-my-bucket}"
+dvwa_SCRIPT="${dvwa_SCRIPT:-dvwa.sh}"
+S3_BUCKET=dvwa-json
 
 # 동적 변수 설정
 containerName="${CONTAINER_NAME}-${BUILD_NUMBER}"
 containerFile="container_name_${BUILD_NUMBER}.txt"
-zapJson="zap_test_${BUILD_NUMBER}.json"
+dvwaJson="dvwa_test_${BUILD_NUMBER}.json"
 port=$((8080 + (BUILD_NUMBER % 1000)))
 timestamp=$(date +"%Y%m%d_%H%M%S")
-s3_key="default/zap_test_${timestamp}.json"
+s3_key="default/dvwa_test_${timestamp}.json"
 
 echo "[*] 컨테이너 이름: $containerName"
 echo "$containerName" > "$containerFile"
@@ -37,21 +37,21 @@ for j in {1..15}; do
   sleep 2
 done
 
-echo "[*] ZAP 스크립트 실행 중..."
-chmod +x ~/"$ZAP_SCRIPT"
-~/"$ZAP_SCRIPT" "$containerName"
+echo "[*] dvwa 스크립트 실행 중..."
+chmod +x ~/"$dvwa_SCRIPT"
+~/"$dvwa_SCRIPT" "$containerName"
 
-if [ ! -f ~/zap_test.json ]; then
-  echo "❌ ZAP 결과 파일이 존재하지 않습니다."
+if [ ! -f ~/DAVW_test.json ]; then
+  echo "❌ dvwa 결과 파일이 존재하지 않습니다."
   exit 1
 fi
 
 echo "[*] 결과 파일 저장"
-cp ~/zap_test.json "$zapJson"
-cp "$zapJson" zap_test.json
+cp ~/dvwa_test.json "$dvwaJson"
+cp "$dvwaJson" dvwa_test.json
 
 echo "[*] SecurityHub용 S3 업로드"
-if aws s3 cp zap_test.json "s3://${S3_BUCKET}/${s3_key}" --region "$REGION"; then
+if aws s3 cp dvwa_test.json "s3://${S3_BUCKET}/${s3_key}" --region "$REGION"; then
     echo "✅ S3 업로드 완료 → s3://${S3_BUCKET}/${s3_key}"
 else
     echo "⚠️ S3 업로드 실패 (무시)"
