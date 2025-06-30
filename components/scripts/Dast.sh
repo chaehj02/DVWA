@@ -26,7 +26,7 @@ aws ecr get-login-password --region "$REGION" | docker login --username AWS --pa
 docker pull "$ECR_REPO:${IMAGE_TAG}"
 
 echo "[*] 컨테이너 실행 중..."
-docker run -d --name "$containerName" -p "${port}:8080" "$ECR_REPO:${IMAGE_TAG}"
+docker run -d --name "$containerName" -p "${port}:80" "$ECR_REPO:${IMAGE_TAG}"
 
 echo "[*] Health check..."
 for j in {1..15}; do
