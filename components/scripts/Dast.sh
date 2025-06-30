@@ -14,7 +14,7 @@ S3_BUCKET=dvwa-json
 containerName="${CONTAINER_NAME}-${BUILD_NUMBER}"
 containerFile="container_name_${BUILD_NUMBER}.txt"
 dvwaJson="dvwa_test_${BUILD_NUMBER}.json"
-port=$((8080 + (BUILD_NUMBER % 1000)))
+port=$((4280 + (BUILD_NUMBER % 1000)))
 timestamp=$(date +"%Y%m%d_%H%M%S")
 s3_key="default/dvwa_test_${timestamp}.json"
 
