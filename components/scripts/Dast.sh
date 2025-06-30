@@ -41,7 +41,7 @@ echo "[*] dvwa 스크립트 실행 중..."
 chmod +x ~/"$dvwa_SCRIPT"
 ~/"$dvwa_SCRIPT" "$containerName"
 
-if [ ! -f ~/DAVW_test.json ]; then
+if [ ! -f ~/dvwa_test.json ]; then
   echo "❌ dvwa 결과 파일이 존재하지 않습니다."
   exit 1
 fi
