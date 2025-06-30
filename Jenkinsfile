@@ -32,11 +32,12 @@ pipeline {
         }
 
         stage('🔍 ZAP 스캔 및 SecurityHub 전송') {
-             agent { label 'zap' }
-            steps {
-                sh 'components/scripts/DAST.sh'
-            }
-        }
+    agent { label 'zap' }
+    steps {
+        sh 'bash DVWA/components/scripts/Dast.sh'
+    }
+}
+
 
         stage('🧩 Generate taskdef.json') {
             steps {
