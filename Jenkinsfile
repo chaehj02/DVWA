@@ -9,13 +9,10 @@ pipeline {
         REGION         = "ap-northeast-2"
         DAST_HOST      = "172.31.8.198"
         SSH_CRED_ID    = "jenkin_sv"
-        ZAP_SCRIPT     = "zap_webgoat.sh"
-        CONTAINER_NAME = "webgoat-test"
         S3_BUCKET      = "webgoat-deploy-bucket"
         DEPLOY_APP     = "webgoat-cd-app"
         DEPLOY_GROUP   = "webgoat-deployment-group"
         BUNDLE         = "webgoat-deploy-bundle.zip"
-        EC2_INSTANCE_ID = "i-0f3dde2aad32ae6ce"
     }
 
     stages {
