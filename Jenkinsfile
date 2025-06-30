@@ -20,10 +20,6 @@ pipeline {
             steps { checkout scm }
         }
 
-        stage('🔨 Build JAR') {
-            steps { sh 'mvn clean package -DskipTests' }
-        }
-
         stage('🐳 Docker Build & Push') {
             steps {
                 sh "docker build -t ${ECR_REPO}:${IMAGE_TAG} ."
