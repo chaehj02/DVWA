@@ -34,7 +34,7 @@ pipeline {
         stage('🔍 ZAP 스캔 및 SecurityHub 전송') {
     agent { label 'zap' }
     steps {
-        sh 'bash DVWA/components/scripts/Dast.sh'
+        sh 'bash components/scripts/Dast.sh'
     }
 }
 
